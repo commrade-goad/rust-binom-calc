@@ -1,3 +1,3 @@
 # rust-binom-calc
 ## Compile
-```cargo build --release`'`  
+```cargo build --release```  
