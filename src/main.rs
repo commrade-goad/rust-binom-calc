@@ -1,3 +1,6 @@
+use std::env;
+use std::process;
+
 fn count_combinations(n: u32, x: u32) -> u32 {
     if x > n {
         0
@@ -6,7 +9,7 @@ fn count_combinations(n: u32, x: u32) -> u32 {
     }
 }
 
-fn binom(n:u32, x:u32, p:f32, cumulative: bool, cumulative_type: String){
+fn binom(n:u32, x:u32, p:f32, cumulative: bool, cumulative_type: &String){
     if cumulative == true{
         match &cumulative_type[..]{
             "up" => {
@@ -45,8 +48,79 @@ fn binom(n:u32, x:u32, p:f32, cumulative: bool, cumulative_type: String){
         println!("{result}");
     }
 }
+
+fn print_help(){
+    println!("Usage :\n arguments: n , x , p, cumulative, up/down[depend]");
+}
+
 fn main() {
-    //println!("{}", count_combinations(6, 2));
-    //println!("{}", count_permutations(6, 1));
-    binom(5,2,0.5,false,"up".to_string());
+    let mut args: Vec<String> = env::args().collect();
+    println!("{:?}", args);
+
+    let help_args = vec!["-h".to_string(), "--help".to_string()];
+    if help_args.iter().any(|e| args.contains(e)){
+        print_help();
+        process::exit(0)
+    }
+
+    if args.len() < 4 {
+        println!("Not enought arguments!");
+        print_help();
+        process::exit(1);
+    }
+
+    let cumulative: bool = args[4].parse().unwrap_or_else(|e| {
+            println!("'cumulative' variable must be a bool!\n {e}");
+            print_help();
+            process::exit(1);
+        }); 
+
+    if cumulative == false { 
+        let n:u32 = args[1].parse().unwrap_or_else(|e| {
+            println!("'n' variable must be an u32!\n {e}");
+            print_help();
+            process::exit(1);
+        });
+
+        let x:u32 = args[2].parse().unwrap_or_else(|e| {
+            println!("'x' variable must be an u32!\n {e}");
+            print_help();
+            process::exit(1);
+        });
+
+        let p:f32 = args[3].parse().unwrap_or_else(|e| {
+            println!("'p' variable must be a f32!\n {e}");
+            print_help();
+            process::exit(1);
+        });
+        let cumulative_string: String = "none".to_string();
+        args.push(cumulative_string);
+        binom(n,x,p,cumulative,&args[5]);
+    }
+
+    else {
+        if args.len() < 6 {
+            println!("Not enought arguments!");
+            print_help();
+            process::exit(1);
+        }
+        let n:u32 = args[1].parse().unwrap_or_else(|e| {
+            println!("'n' variable must be an u32!\n {e}");
+            print_help();
+            process::exit(1);
+        });
+
+        let x:u32 = args[2].parse().unwrap_or_else(|e| {
+            println!("'x' variable must be an u32!\n {e}");
+            print_help();
+            process::exit(1);
+        });
+
+        let p:f32 = args[3].parse().unwrap_or_else(|e| {
+            println!("'p' variable must be a f32!\n {e}");
+            print_help();
+            process::exit(1);
+        });
+        binom(n,x,p,cumulative,&args[5]);
+    }
 }
