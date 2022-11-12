@@ -55,7 +55,6 @@ fn print_help(){
 
 fn main() {
     let mut args: Vec<String> = env::args().collect();
-    println!("{:?}", args);
 
     let help_args = vec!["-h".to_string(), "--help".to_string()];
     if help_args.iter().any(|e| args.contains(e)){
