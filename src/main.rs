@@ -62,7 +62,7 @@ fn main() {
         process::exit(0)
     }
 
-    if args.len() < 4 {
+    if args.len() < 5 {
         println!("Not enought arguments!");
         print_help();
         process::exit(1);
@@ -92,6 +92,10 @@ fn main() {
             print_help();
             process::exit(1);
         });
+        if p > 1.0 {
+            println!("'p' cant be more than 1.0!");
+            process::exit(1);
+        }
         let cumulative_string: String = "none".to_string();
         args.push(cumulative_string);
         binom(n,x,p,cumulative,&args[5]);
@@ -120,6 +124,10 @@ fn main() {
             print_help();
             process::exit(1);
         });
+        if p > 1.0 {
+            println!("'p' cant be more than 1.0!");
+            process::exit(1);
+        }
         binom(n,x,p,cumulative,&args[5]);
     }
 }
