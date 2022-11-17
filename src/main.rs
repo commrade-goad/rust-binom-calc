@@ -23,6 +23,14 @@ fn binom(n:u32, x:u32, p:f32, cumulative: bool, cumulative_type: &String){
                 }
                 let cumulate_all_value:f32 = cumulative_value.iter().sum();
                 let cumulate_all_value:f32 = 1.0 -cumulate_all_value;
+                if cumulate_all_value > 1.0 {
+                    println!("1");
+                    return;
+                }
+                else if cumulate_all_value <= -0.0 {
+                    println!("0");
+                    return;
+                }
                 println!("{}",cumulate_all_value);
                 }
             "down" => {
@@ -35,6 +43,14 @@ fn binom(n:u32, x:u32, p:f32, cumulative: bool, cumulative_type: &String){
                     x -= 1.0;
                 }
                 let cumulate_all_value:f32 = cumulative_value.iter().sum();
+                if cumulate_all_value > 1.0 {
+                    println!("1");
+                    return;
+                }
+                else if cumulate_all_value <= -0.0 {
+                    println!("0");
+                    return;
+                }
                 println!("{}",cumulate_all_value);
             }
             _ => {
@@ -45,6 +61,14 @@ fn binom(n:u32, x:u32, p:f32, cumulative: bool, cumulative_type: &String){
     else {
         let get_combinations = count_combinations(n,x);
         let result = get_combinations as f32 *p.powf(x as f32)*(1 as f32 -p).powf(n as f32-x as f32);
+        if result > 1.0 {
+            println!("1");
+            return;
+        }
+        else if result <= -0.0 {
+            println!("0");
+            return;
+        }
         println!("{result}");
     }
 }
