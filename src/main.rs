@@ -111,6 +111,11 @@ fn main() {
             process::exit(1);
         });
 
+        if x > n {
+            println!("'x' can't be bigger than 'n'!");
+            process::exit(1);
+        }
+
         let p:f32 = args[3].parse().unwrap_or_else(|e| {
             println!("'p' variable must be a f32!\n {e}");
             print_help();
@@ -142,6 +147,11 @@ fn main() {
             print_help();
             process::exit(1);
         });
+
+        if x > n {
+            println!("'x' can't be bigger than 'n'!");
+            process::exit(1);
+        }
 
         let p:f32 = args[3].parse().unwrap_or_else(|e| {
             println!("'p' variable must be a f32!\n {e}");
