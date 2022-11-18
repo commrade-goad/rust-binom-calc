@@ -9,7 +9,7 @@ fn count_combinations(n: u32, x: u32) -> u32 {
     }
 }
 
-fn binom(n:u32, x:u32, p:f32, cumulative: bool, cumulative_type: &String){
+fn binom(n:u32, x:u32, p:f32, cumulative: bool, cumulative_type: &String) -> f32 {
     if cumulative == true{
         match &cumulative_type[..]{
             "up" => {
@@ -24,14 +24,12 @@ fn binom(n:u32, x:u32, p:f32, cumulative: bool, cumulative_type: &String){
                 let cumulate_all_value:f32 = cumulative_value.iter().sum();
                 let cumulate_all_value:f32 = 1.0 -cumulate_all_value;
                 if cumulate_all_value > 1.0 {
-                    println!("1");
-                    return;
+                    return 1.0;
                 }
                 else if cumulate_all_value <= -0.0 {
-                    println!("0");
-                    return;
+                    return 0.0;
                 }
-                println!("{}",cumulate_all_value);
+                return cumulate_all_value;
                 }
             "down" => {
                 let mut x = x as f32;
@@ -44,17 +42,16 @@ fn binom(n:u32, x:u32, p:f32, cumulative: bool, cumulative_type: &String){
                 }
                 let cumulate_all_value:f32 = cumulative_value.iter().sum();
                 if cumulate_all_value > 1.0 {
-                    println!("1");
-                    return;
+                    return 1.0;
                 }
                 else if cumulate_all_value <= -0.0 {
-                    println!("0");
-                    return;
+                    return 0.0;
                 }
-                println!("{}",cumulate_all_value);
+                return cumulate_all_value;
             }
             _ => {
                 println!("Unknown command!");
+                return 100.0;
             }
         }
     }
@@ -62,14 +59,12 @@ fn binom(n:u32, x:u32, p:f32, cumulative: bool, cumulative_type: &String){
         let get_combinations = count_combinations(n,x);
         let result = get_combinations as f32 *p.powf(x as f32)*(1 as f32 -p).powf(n as f32-x as f32);
         if result > 1.0 {
-            println!("1");
-            return;
+            return 1.0;
         }
         else if result <= -0.0 {
-            println!("0");
-            return;
+            return 0.0;
         }
-        println!("{result}");
+        return result;
     }
 }
 
@@ -127,7 +122,8 @@ fn main() {
         }
         let cumulative_string: String = "none".to_string();
         args.push(cumulative_string);
-        binom(n,x,p,cumulative,&args[5]);
+        let print_value = binom(n,x,p,cumulative,&args[5]);
+        println!("{}", print_value);
     }
 
     else {
@@ -162,6 +158,7 @@ fn main() {
             println!("'p' cant be more than 1.0!");
             process::exit(1);
         }
-        binom(n,x,p,cumulative,&args[5]);
+        let print_value = binom(n,x,p,cumulative,&args[5]);
+        println!("{}", print_value);
     }
 }
